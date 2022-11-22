@@ -1,6 +1,35 @@
-import React from "react";
+import React, { useState } from "react";
+import authService from "../../config/AuthService";
 
 function RegisterPage() {
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [rePassword, setrePassword] = useState("");
+
+  const register = async () => {
+    const auth = {
+      username,
+      email,
+      password,
+    };
+
+    const response = await fetch(authService.register, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(auth),
+    })
+      .then((response) => response.json())
+      .then((data) => console.log(data))
+      .catch((error) => console.log(error));
+
+    console.log(response);
+  };
+
+  const onChangeUsername = (e) => {};
+
   return (
     <div className="login">
       <div className="loginWrapper">
@@ -13,11 +42,29 @@ function RegisterPage() {
         </div>
         <div className="loginRight">
           <div className="loginBox">
-            <input placeholder="Username" className="loginInput" />
-            <input placeholder="Email" className="loginInput" />
-            <input placeholder="Password" className="loginInput" />
-            <input placeholder="Password Again" className="loginInput" />
-            <button className="loginButton bg-purple-800">Kayıt ol</button>
+            <input
+              placeholder="Username"
+              onChange={(e) => setUsername(e.target.value)}
+              className="loginInput"
+            />
+            <input
+              placeholder="Email"
+              onChange={(e) => setEmail(e.target.value)}
+              className="loginInput"
+            />
+            <input
+              placeholder="Password"
+              onChange={(e) => setPassword(e.target.value)}
+              className="loginInput"
+            />
+            <input
+              placeholder="Password Again"
+              onChange={(e) => setrePassword(e.target.value)}
+              className="loginInput"
+            />
+            <button onClick={register} className="loginButton bg-purple-800">
+              Kayıt ol
+            </button>
             <button className="loginRegisterButton bg-lime-600">
               Hesabınla Giriş Yap
             </button>
