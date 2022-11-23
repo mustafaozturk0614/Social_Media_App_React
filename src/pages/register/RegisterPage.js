@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import authService from "../../config/AuthService";
+import { useDispatch } from "react-redux";
+import { fecthRegister } from "../../store/features/AuthSlice";
 
 function RegisterPage() {
   const [username, setUsername] = useState("");
@@ -7,25 +8,14 @@ function RegisterPage() {
   const [password, setPassword] = useState("");
   const [rePassword, setrePassword] = useState("");
 
+  const dispatch = useDispatch();
   const register = async () => {
     const auth = {
       username,
       email,
       password,
     };
-
-    const response = await fetch(authService.register, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(auth),
-    })
-      .then((response) => response.json())
-      .then((data) => console.log(data))
-      .catch((error) => console.log(error));
-
-    console.log(response);
+    dispatch(fecthRegister(auth));
   };
 
   const onChangeUsername = (e) => {};
