@@ -5,8 +5,8 @@ import RegisterPage from "./pages/register/RegisterPage";
 function App() {
   return (
     <div className="App">
-      <RegisterPage></RegisterPage>
-      {/* <LoginPage></LoginPage> */}
+      {/* <RegisterPage></RegisterPage> */}
+      <LoginPage></LoginPage>
     </div>
   );
 }

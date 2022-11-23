@@ -1,6 +1,23 @@
-import React from "react";
-
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { fetchLogin } from "../../store/features/AuthSlice";
 function LoginPage() {
+  const dispatch = useDispatch();
+
+  const [auth, setAuth] = useState({
+    username: "",
+    password: "",
+  });
+
+  const doLogin = () => {
+    dispatch(fetchLogin(auth));
+  };
+
+  const onChangeAuth = (e) => {
+    const { name, value } = e.target;
+    setAuth({ ...auth, [name]: value });
+    console.log(auth);
+  };
   return (
     <div className="login">
       <div className="loginWrapper">
@@ -18,14 +35,19 @@ function LoginPage() {
               placeholder="username"
               className="loginInput"
               name="username"
+              onChange={onChangeAuth}
             />
+
             <input
               type={"password"}
               placeholder="Password"
               className="loginInput"
               name="password"
+              onChange={onChangeAuth}
             />
-            <button className="loginButton bg-purple-600">Giriş Yap</button>
+            <button onClick={doLogin} className="loginButton bg-purple-600">
+              Giriş Yap
+            </button>
             <span className="loginForgot">Şifremi Unuttum?</span>
             <button className="loginRegisterButton  bg-lime-400">Üye Ol</button>
           </div>
