@@ -20,14 +20,18 @@ function RegisterPage() {
   console.log(alertMessage);
 
   const dispatch = useDispatch();
-  const register = async () => {
+  const register = async (e) => {
+    e.preventDefault();
+
     const auth = {
       username,
       email,
       password,
     };
     console.log(checkPassword());
-    if (await checkPassword()) {
+    const response = await checkPassword();
+
+    if (response) {
       dispatch(fecthRegister(auth));
     }
   };
@@ -75,13 +79,12 @@ function RegisterPage() {
               placeholder="Password Again"
               onChange={(e) => {
                 setrePassword(e.target.value);
+                checkPassword();
               }}
               className="loginInput"
             />
-            {isValid && isSave ? (
-              <Alert variant="filled" severity="success">
-                {alertMessage}
-              </Alert>
+            {isValid ? (
+              ""
             ) : (
               <Alert variant="filled" severity="error">
                 {alertMessage}
@@ -93,7 +96,10 @@ function RegisterPage() {
             </button>
 
             <Link to="/">
-              <button className="loginRegisterButton bg-lime-600">
+              <button
+                type={"submit"}
+                className="loginRegisterButton bg-lime-600"
+              >
                 Hesabınla Giriş Yap
               </button>
             </Link>

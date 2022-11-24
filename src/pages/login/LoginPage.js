@@ -1,10 +1,12 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { fetchLogin } from "../../store/features/AuthSlice";
 function LoginPage() {
   const dispatch = useDispatch();
 
+  const token = useSelector((state) => state.auth.token);
+  console.log("token==>" + token);
   const [auth, setAuth] = useState({
     username: "",
     password: "",

@@ -66,6 +66,11 @@ const authSlice = createSlice({
     setAllertMsssage: (state, action) => {
       state.alertMessage = action.payload;
     },
+
+    logout: (state, action) => {
+      state.token = "";
+      state.isAuthanticated = false;
+    },
   },
   extraReducers: (build) => {
     build.addCase(fecthRegister.fulfilled, (state, action) => {
@@ -114,6 +119,6 @@ const authSlice = createSlice({
   },
 });
 
-export const { setAllertMsssage } = authSlice.actions;
+export const { setAllertMsssage, logout } = authSlice.actions;
 
 export default authSlice.reducer;

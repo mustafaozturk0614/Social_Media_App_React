@@ -1,2 +1,3 @@
 import AuthSlice from "./AuthSlice";
-export { AuthSlice };
+import UserSlice from "./UserSlice";
+export { AuthSlice, UserSlice };
