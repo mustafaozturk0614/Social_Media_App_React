@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 import { fetchLogin } from "../../store/features/AuthSlice";
 function LoginPage() {
   const dispatch = useDispatch();
@@ -49,7 +50,12 @@ function LoginPage() {
               Giriş Yap
             </button>
             <span className="loginForgot">Şifremi Unuttum?</span>
-            <button className="loginRegisterButton  bg-lime-400">Üye Ol</button>
+
+            <Link to="/register">
+              <button className="loginRegisterButton  bg-lime-400">
+                Üye Ol
+              </button>
+            </Link>
           </div>
         </div>
       </div>

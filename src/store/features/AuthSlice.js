@@ -6,7 +6,9 @@ const initialStateAuth = {
   auth: [],
   isLoading: false,
   isLoadingRegister: false,
+  isSave: false,
   code: 0,
+  alertMessage: "",
   error: {
     code: "",
     message: "",
@@ -60,13 +62,21 @@ const authSlice = createSlice({
   name: "auth",
   initialState: initialStateAuth,
 
-  reducers: {},
+  reducers: {
+    setAllertMsssage: (state, action) => {
+      state.alertMessage = action.payload;
+    },
+  },
   extraReducers: (build) => {
     build.addCase(fecthRegister.fulfilled, (state, action) => {
       if (action.payload.code === 200) {
         state.auth = action.payload;
+        state.isSave = true;
+        state.alertMessage = "Kayıt Başarılı";
       } else {
         state.error = action.payload;
+        state.isSave = false;
+        state.alertMessage = "Kayıt başarısız";
       }
       console.log(state.error);
       console.log(state.auth);
@@ -75,9 +85,12 @@ const authSlice = createSlice({
     });
     build.addCase(fecthRegister.pending, (state, action) => {
       state.isLoadingRegister = true;
+      state.isSave = false;
     });
     build.addCase(fecthRegister.rejected, (state, action) => {
       state.isLoadingRegister = false;
+      state.isSave = false;
+      state.alertMessage = "Kayıt başarısız";
     });
 
     build.addCase(fetchLogin.fulfilled, (state, action) => {
@@ -100,5 +113,7 @@ const authSlice = createSlice({
     });
   },
 });
+
+export const { setAllertMsssage } = authSlice.actions;
 
 export default authSlice.reducer;

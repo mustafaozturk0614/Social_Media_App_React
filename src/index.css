@@ -150,3 +150,8 @@ code {
   font-weight: 500;
   cursor: pointer;
 }
+
+.homeContainer {
+  display: flex;
+  width: 100%;
+}
