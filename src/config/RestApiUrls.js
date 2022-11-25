@@ -6,6 +6,7 @@ const version = "/api/v1";
 const RestApis = {
   authService: "http://localhost:" + authPort + version,
   userService: "http://localhost:" + userPort + version,
+  postService: "http://localhost:" + postPort + version,
 };
 
 export default RestApis;

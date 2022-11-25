@@ -3,7 +3,8 @@ import authService from "../../config/AuthService";
 const initialStateAuth = {
   token: "",
   isAuthanticated: false,
-  auth: [],
+  auth: {},
+  authList: [],
   isLoading: false,
   isLoadingRegister: false,
   isSave: false,
@@ -66,10 +67,17 @@ const authSlice = createSlice({
     setAllertMsssage: (state, action) => {
       state.alertMessage = action.payload;
     },
+    setIsSave: (state, action) => {
+      state.isSave = false;
+      state.alertMessage = "";
+    },
 
     logout: (state, action) => {
       state.token = "";
       state.isAuthanticated = false;
+    },
+    setAuth: (state, action) => {
+      state.auth = action.payload;
     },
   },
   extraReducers: (build) => {
@@ -81,11 +89,14 @@ const authSlice = createSlice({
       } else {
         state.error = action.payload;
         state.isSave = false;
-        state.alertMessage = "Kayıt başarısız";
+        if (state.error.fields.length > 0) {
+          state.error.fields.forEach((x) => {
+            state.alertMessage += x;
+          });
+        } else {
+          state.alertMessage = state.error.message;
+        }
       }
-      console.log(state.error);
-      console.log(state.auth);
-
       state.isLoadingRegister = false;
     });
     build.addCase(fecthRegister.pending, (state, action) => {
@@ -95,7 +106,7 @@ const authSlice = createSlice({
     build.addCase(fecthRegister.rejected, (state, action) => {
       state.isLoadingRegister = false;
       state.isSave = false;
-      state.alertMessage = "Kayıt başarısız";
+      state.alertMessage = state.error.message;
     });
 
     build.addCase(fetchLogin.fulfilled, (state, action) => {
@@ -119,6 +130,7 @@ const authSlice = createSlice({
   },
 });
 
-export const { setAllertMsssage, logout } = authSlice.actions;
+export const { setAllertMsssage, logout, setIsSave, setAuth } =
+  authSlice.actions;
 
 export default authSlice.reducer;
