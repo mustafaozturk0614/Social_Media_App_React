@@ -4,7 +4,9 @@ import userService from "../../config/UserService";
 
 const initialStateUser = {
   token: "",
-  userProfile: {},
+  userProfile: {
+    follows: [],
+  },
   userProfileList: [],
   isLoading: false,
   error: {

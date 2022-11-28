@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Feed from "../../component/feed/Feed";
 import Rightbar from "../../component/rightbar/Rightbar";
@@ -10,9 +10,12 @@ function HomePage() {
   const token = useSelector((state) => state.auth.token);
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.userProfile);
+  const [follows, setFollows] = useState([]);
+
   const getUser = async () => {
     const response = await dispatch(findbyTokenwithAxios(token));
-    console.log(response);
+
+    setFollows([...response.payload.follows]);
   };
 
   useEffect(() => {
@@ -24,7 +27,7 @@ function HomePage() {
       <Topbar></Topbar>
       <div className="homeContainer">
         <Sidebar></Sidebar>
-        <Feed></Feed>
+        <Feed follows={follows} id={""}></Feed>
         <Rightbar></Rightbar>
       </div>
     </>
