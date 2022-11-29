@@ -146,7 +146,7 @@ const postSlice = createSlice({
     });
 
     build.addCase(findMyPostFetch.fulfilled, (state, action) => {
-      state.postList = action.payload;
+      state.myPostList = action.payload;
       state.isLoading = false;
     });
     build.addCase(findMyPostFetch.rejected, (state, action) => {

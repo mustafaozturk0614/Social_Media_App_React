@@ -5,12 +5,16 @@ import Rightbar from "../../component/rightbar/Rightbar";
 import Sidebar from "../../component/sidebar/Sidebar";
 import Topbar from "../../component/topbar/Topbar";
 import { findbyTokenwithAxios } from "../../store/features/UserSlice";
+
 import "./profile.css";
 import { useParams } from "react-router-dom";
 
-function Profile() {
-  const id = useParams();
+function OtherUserProfile() {
   const user = useSelector((state) => state.user.userProfile);
+  const token = useSelector((state) => state.auth.token);
+  const id = useParams();
+  console.log("====>" + id);
+
   return (
     <>
       <Topbar />
@@ -21,12 +25,12 @@ function Profile() {
             <div className="profileCover">
               <img
                 className="profileCoverImg"
-                src="../../assets/post/3.jpeg"
+                src="assets/post/3.jpeg"
                 alt=""
               />
               <img
                 className="profileUserImg"
-                src="../../assets/person/7.jpeg"
+                src="assets/person/7.jpeg"
                 alt=""
               />
             </div>
@@ -36,7 +40,7 @@ function Profile() {
             </div>
           </div>
           <div className="profileRightBottom">
-            <Feed id={id}></Feed>
+            <Feed id={id} />
             <Rightbar profile={user} id={id} />
           </div>
         </div>
@@ -45,4 +49,4 @@ function Profile() {
   );
 }
 
-export default Profile;
+export default OtherUserProfile;

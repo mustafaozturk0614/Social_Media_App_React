@@ -1,6 +1,10 @@
 import "./rightbar.css";
 import EditIcon from "@mui/icons-material/Edit";
-export default function Rightbar({ profile }) {
+import { useDispatch, useSelector } from "react-redux";
+import { getFollowsFetch } from "../../store/features/FollowSlice";
+import { useEffect } from "react";
+import { Link } from "react-router-dom";
+export default function Rightbar({ profile, id }) {
   const HomeRightbar = () => {
     return (
       <>
@@ -22,12 +26,24 @@ export default function Rightbar({ profile }) {
   };
 
   const ProfileRightbar = () => {
+    const users = useSelector((state) => state.follow.userProfileList);
+    const dispatch = useDispatch();
+    const token = useSelector((state) => state.auth.token);
+
+    const getFollows = () => {
+      dispatch(getFollowsFetch({ token: token, id: id }));
+    };
+
+    useEffect(() => {
+      getFollows();
+    }, []);
+
     return (
       <>
         <div className="flex justify-center">
           <div className="block rounded-lg shadow-lg bg-white max-w-sm text-center">
             <div className="py-3 px-6 border-b border-gray-300">
-              {profile?.name} Mustafa
+              {profile?.name}
             </div>
             <div className="p-6">
               <h4 className="text-gray-900 text-xl font-medium mb-2">
@@ -67,7 +83,13 @@ export default function Rightbar({ profile }) {
           </div>
         </div>
         <h4 className="rightbarTitle">Arkadaşlarım</h4>
-        <div className="rightbarFollowings"></div>
+        <div className="rightbarFollowings">
+          {users.map((data, index) => (
+            <Link key={data.id} to={`/otherprofile/${data.id}`}>
+              {data.id},{data.username}
+            </Link>
+          ))}
+        </div>
       </>
     );
   };

@@ -7,6 +7,7 @@ const initialStateUser = {
   userProfile: {
     follows: [],
   },
+  currentUserId: null,
   userProfileList: [],
   isLoading: false,
   error: {
@@ -41,6 +42,7 @@ const userSlice = createSlice({
   extraReducers: (build) => {
     build.addCase(findbyTokenwithAxios.fulfilled, (state, action) => {
       state.userProfile = action.payload;
+      state.currentUserId = action.payload.id;
       state.isLoading = false;
     });
 
@@ -53,5 +55,7 @@ const userSlice = createSlice({
     });
   },
 });
+
+export const {} = userSlice.actions;
 
 export default userSlice.reducer;

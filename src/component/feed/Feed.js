@@ -6,49 +6,38 @@ import {
   findallPostFetch,
   findMyPostFetch,
 } from "../../store/features/PostSlice";
-import { findbyTokenwithAxios } from "../../store/features/UserSlice";
+import {
+  findbyTokenwithAxios,
+  setUserIdforPosts,
+} from "../../store/features/UserSlice";
 import Post from "../post/Post";
 import Share from "../share/Share";
 
-function Feed({ follows, id }) {
+function Feed({ id }) {
   const dispatch = useDispatch();
-  const posts = useSelector((state) => state.post.postList);
+  const otherPostList = useSelector((state) => state.post.postList);
+  const myPostList = useSelector((state) => state.post.myPostList);
   const token = useSelector((state) => state.auth.token);
-  const [userId, setUserID] = useState();
-  const getMyFollowPosts = async () => {
-    const response = await dispatch(
-      findallMYFollowPostFetch({
-        token: token,
-        follows: follows,
-      })
-    );
-  };
+  const currentUserId = useSelector((state) => state.user.currentUserId);
+  const posts = id === "" || currentUserId == null ? otherPostList : myPostList;
+
   const getMyFollowPosts2 = async () => {
     const response = await dispatch(findallMYFollowPost2Fetch(token));
     console.log(response);
   };
-  // useEffect(() => {
-  //   if (follows.length > 0) {
-  //     getMyFollowPosts();
-  //   }
-  // }, [follows]);
 
   const getMyPost = async () => {
     const response = await dispatch(findMyPostFetch(token));
-    console.log(response);
-    setUserID(response?.payload[0].userId);
   };
-  useEffect(() => {
-    getMyFollowPosts2();
-  }, [token]);
 
   useEffect(() => {
-    setUserID(id);
-    if (userId === id) {
+    if (id == "" || currentUserId == null) {
+      getMyFollowPosts2();
+    } else {
       getMyPost();
-      console.log(posts);
     }
-  }, [userId]);
+  }, [currentUserId]);
+
   return (
     <div className="feed">
       <div className="feedWrapper">
