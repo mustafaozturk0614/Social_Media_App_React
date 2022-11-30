@@ -21,18 +21,14 @@ export const getFollowsFetch = createAsyncThunk(
   "follow/findfollows",
 
   async (payload) => {
-    console.log(payload);
     try {
-      const response = await fetch(
-        followService.findfollows + "?id=" + payload.id.id,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(payload.token),
-        }
-      )
+      const response = await fetch(followService.findfollows, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      })
         .then((response) => response.json())
         .catch((error) => console.log(error));
       return response;

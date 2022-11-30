@@ -20,6 +20,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../store/features/AuthSlice";
 import { findbyTokenwithAxios } from "../../store/features/UserSlice";
+import SearchComponent from "../search/SearchComponent";
 function Topbar() {
   const user = useSelector((state) => state.user.userProfile);
   const isAuthanticated = useSelector((state) => state.auth.isAuthanticated);
@@ -32,7 +33,7 @@ function Topbar() {
     setAnchorEl(null);
   };
   const getUser = async () => {
-    const response = await dispatch(findbyTokenwithAxios(token));
+    const response = await dispatch(findbyTokenwithAxios({ token }));
   };
   const navigate = useNavigate();
   const gotoprofile = () => {
@@ -52,13 +53,7 @@ function Topbar() {
         <span className="logo">Social Media</span>
       </div>
       <div className="topbarCenter">
-        <div className="searchbar">
-          <Search className="searchIcon" />
-          <input
-            placeholder="Search for friend, post or video"
-            className="searchInput"
-          />
-        </div>
+        <SearchComponent></SearchComponent>
       </div>
 
       <div className="topbarRight">

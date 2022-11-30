@@ -29,6 +29,9 @@ export default function Rightbar({ profile, id }) {
     const users = useSelector((state) => state.follow.userProfileList);
     const dispatch = useDispatch();
     const token = useSelector((state) => state.auth.token);
+    const currentUserId = useSelector((state) => state.user.currentUserId);
+    //const myprofile =
+    //   id != currentUserId ? users.find((x) => x.id == id) : profile;
 
     const getFollows = () => {
       dispatch(getFollowsFetch({ token: token, id: id }));
@@ -85,8 +88,15 @@ export default function Rightbar({ profile, id }) {
         <h4 className="rightbarTitle">Arkadaşlarım</h4>
         <div className="rightbarFollowings">
           {users.map((data, index) => (
-            <Link key={data.id} to={`/otherprofile/${data.id}`}>
-              {data.id},{data.username}
+            <Link key={data.id} to={`/profile/${data.id}`}>
+              <div className="rightbarFollowing rounded-full">
+                <img
+                  src="assets/person/1.jpeg"
+                  alt=""
+                  className="rightbarFollowingImg rounded-full"
+                />
+                <span className="rightbarFollowingName">{data.username}</span>
+              </div>
             </Link>
           ))}
         </div>

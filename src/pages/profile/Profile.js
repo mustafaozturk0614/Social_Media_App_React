@@ -4,13 +4,33 @@ import { useDispatch, useSelector } from "react-redux";
 import Rightbar from "../../component/rightbar/Rightbar";
 import Sidebar from "../../component/sidebar/Sidebar";
 import Topbar from "../../component/topbar/Topbar";
-import { findbyTokenwithAxios } from "../../store/features/UserSlice";
+import {
+  findbyTokenwithAxios,
+  findByUserId,
+} from "../../store/features/UserSlice";
 import "./profile.css";
 import { useParams } from "react-router-dom";
 
 function Profile() {
-  const id = useParams();
-  const user = useSelector((state) => state.user.userProfile);
+  const { id } = useParams();
+  const myuser = useSelector((state) => state.user.userProfile);
+  const otheruser = useSelector((state) => state.user.otherUserProfile);
+  // const users = useSelector((state) => state.follow.userProfileList);
+  const currentUserId = useSelector((state) => state.user.currentUserId);
+  // const myprofile = id != currentUserId ? users.find((x) => x.id == id) : user;
+  const dispatch = useDispatch();
+  const user = id != currentUserId ? otheruser : myuser;
+
+  const getUSer = () => {
+    dispatch(findByUserId(id));
+  };
+
+  useEffect(() => {
+    if (id != currentUserId) {
+      getUSer();
+    }
+  }, [id]);
+
   return (
     <>
       <Topbar />

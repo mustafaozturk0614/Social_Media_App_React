@@ -15,7 +15,7 @@ function HomePage() {
       <Topbar></Topbar>
       <div className="homeContainer">
         <Sidebar></Sidebar>
-        <Feed id={""}></Feed>
+        <Feed></Feed>
         <Rightbar></Rightbar>
       </div>
     </>
